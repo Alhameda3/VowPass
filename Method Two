@@ -1,0 +1,59 @@
+# import the library module
+import hashlib
+
+# delete vowel letters function 
+def vowpass(newstr):
+    vowels = ('a', 'e', 'i', 'o', 'u')
+    for x in newstr.lower():
+        if x in vowels:
+            newstr = newstr.replace(x, "")
+    return newstr
+ 
+
+#enter Secret Number
+secret_number = raw_input("Input Secret Number: ")
+
+#enter Secret Word
+secret_word = raw_input("Input Secret Word: ")
+
+#delete vowel letters from secret word
+secret_word = vowpass(secret_word)
+
+#enter Service Name
+service_name = raw_input("Enter Service Name: ")
+
+#delete vowel letters from Service Name
+service_name = vowpass(service_name)
+
+# compaind two sercret keys (first componant)
+first_componant = secret_word + "+" + secret_number
+
+ 
+# encode the first componant
+encoded_str = first_componant.encode()
+ 
+# create a sha1 hash object initialized with the encoded string
+hash_obj = hashlib.md5(encoded_str)
+ 
+# convert the hash object to a hexadecimal value
+hexa_value = hash_obj.hexdigest()
+
+# Take last four digits from the hashing string
+first_componant = hexa_value[-4:]
+
+#assigned symbols 
+symbols = {1 : '$', 2 : '@', 3 : '#', 4 : '%', 5 : '&', 6 : '*', 7 : '!'}
+
+#choosing category
+print "         choose the category"
+print("---------------------------------------")
+print(" 1.Finance               2.Email")
+print(" 3.Social Media          4.Payments")
+print(" 5.Education             5.Health")
+print(" 7.Unimportant /n")
+symbol = int(input("Enter category Number:"))
+
+
+ 
+# print the password
+print"Your Password Is:     " + first_componant + symbols[symbol] + service_name + symbols[symbol] + "v1"
